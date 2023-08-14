@@ -1,0 +1,102 @@
+<%-include('partials/navbar')%>
+    <div class="column mt-5 p-4 m-5">
+        <%if (items.length> 0) {%>
+            <h3 class="mb-3 text-center">الموجود في العهدة</h3>
+            <div class="w-50 py-3">
+                <form action="/" method="get">
+                    <div class="input-group">
+                        <input type="hidden" value="<%=parseInt(page||1)%>" name="page">
+                        <input type="search" class="form-control rounded" placeholder="بحث" aria-label="بحث"
+                            aria-describedby="search-addon" name="q" value="<%=q%>"/>
+                        <button type="submit" class="btn btn-primary mx-1 rounded">
+                            <i> <%-include('partials/search_icon.ejs')%> </i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <h5 class="text-muted">النتائج: <%=items.length%>
+            </h5>
+            <table
+                class="table table-responsive table-hover table-bordered mx-auto bg-white rounded shadow text-center">
+                <thead class="table-primary">
+                    <tr class="text-center">
+                        <th>اسم الجهاز</th>
+                        <th>الموديل</th>
+                        <th>نوع الجهاز</th>
+                        <th>S/N</th>
+                        <th>تاريخ التسجيل</th>
+                        <th colspan="2">خيارات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (let item of items) {%>
+                        <tr>
+                            <td><a href="/items/<%= item._id %>" class="text-decoration-none">
+                                    <%= item.name %>
+                                </a>
+                            </td>
+                            <td>
+                                <%= item.model %>
+                            </td>
+                            <td>
+                                <%= item.type %>
+                            </td>
+                            <td>
+                                <%= item.serialNo %>
+                            </td>
+                            <td>
+                                <%= moment(new Date(item.createdAt)).format('DD-MM-YYYY') %>
+                            </td>
+                            <td><a class="text-primary text-center btn btn-link text-decoration-none"
+                                    href="/items/<%=item._id%>/edit"><%-include('partials/edit_icon.ejs')%>
+                                        تعديل</a></td>
+                            <td>
+                                <form action="/items/<%=item._id%>/delete?_method=DELETE" method="post">
+                                    <button type="submit" class="btn btn-link text-danger text-decoration-none">
+                                        <%-include('partials/delete_icon.ejs')%>
+                                            حذف
+                                    </button>
+                                </form>
+                            </td>
+
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+            <%if (count> limit) {%>
+                <nav aria-label="Page navigation example" class="justify-content-center d-flex">
+                    <ul class="pagination">
+                        <%if (page> 1) {%> <li class="page-item"><a class="page-link"
+                                    href="?page=<%=parseInt(page)-1%><%if (q) {%>&q=<%=q%> <%}%>">السابق</a></li>
+                            <%}%>
+                                <%for (let i=0; i < parseInt(pagesCount); i++) {%>
+                                    <li class="<%if (parseInt(page) === i+1) {%> page-item active <%}else {%> page-item <%}%>>"><a class="page-link" href="<%if (parseInt(page) === i+1) {%>#<%}else {%>?page=<%=i+1%><%if (q) {%>&q=<%=q%> <%}%> <%}%>">
+                                            <%=i+1%>
+                                        </a></li>
+                                    <%}%>
+
+
+                                        <%if (page < parseInt(pagesCount)) {%>
+                                            <li class="page-item"><a class="page-link"
+                                                    href="?page=<%=parseInt(page)+1%><%if (q) {%>&q=<%=q%> <%}%>">التالي</a></li>
+                                            <%}%>
+                    </ul>
+                </nav>
+                <%}%>
+                    <%} else {%>
+                        <div class="card text-center mb-3">
+                            <h3 class="text-muted card-body">لا يوجد بيانات</h3>
+                        </div>
+                        <%}%>
+                            <a class="btn btn-primary" href="/items/add"> <i><%-include('partials/add_icon.ejs')%></i> أضف جهاز جديد للعهدة</a>
+    </div>
+
+    <!-- <script>
+        const searchField = document.getElementById('search')
+        const btn = document.getElementById('searchBtn')
+
+    </script> -->
+
+    </body>
+
+    </html>

@@ -1,0 +1,41 @@
+<%-include('../partials/navbar')%>
+    <form class="mt-5 d-flex justify-content-center" action="/items/add" method="post">
+        <div class="w-50">
+            <div class="p-4 m-5 card">
+                <h3 class="mb-5">اضافه جهاز للعهده</h3>
+                <div class="form-group form-floating mb-3">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="اسم الجهاز" required>
+                    <label for="name">اسم الجهاز</label>
+                </div>
+                <div class="form-group form-floating mb-3">
+                    <input type="text" class="form-control" id="model" name="model" placeholder="الموديل" required>
+                    <label for="model">الموديل</label>
+                </div>
+
+                <div class=" mb-3">
+                    <select name="type" id="type" class="form-select" required>
+                        <option value="" hidden>نوع الجهاز</option>
+                        <%for (let item of itemList) {%>
+                            <option value="<%=item%>">
+                                <%=item%>
+                            </option>
+                            <%}%>
+                    </select>
+                </div>
+                <div class="form-group form-floating mb-3">
+                    <input type="text" class="form-control" id="serialNo" name="serialNo" placeholder="S/N"
+                        required>
+                    <label for="serialNo">S/N</label>
+                </div>
+                <!-- <div class="form-group form-floating mb-3">
+                    <input type="file" class="form-control" name="image" id="image" placeholder="image"
+                        >
+                    <label for="image">صورة للجهاز</label>
+                </div> -->
+                <button type="submit" class="btn btn-primary"><i><%-include('../partials/add_icon.ejs')%> إضافة</i></button>
+            </div>
+        </div>
+    </form>
+    </body>
+
+    </html>

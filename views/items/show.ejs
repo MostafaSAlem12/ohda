@@ -1,0 +1,71 @@
+<%-include('../partials/navbar')%>
+    <div class="row">
+        <div class="w-50">
+            <div class="p-4 m-5">
+                <table
+                    class="table table-responsive table-hover table-bordered mx-auto bg-white rounded shadow text-center">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="h2 py-3">
+                                بيانات الجهاز
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="text-center">
+                            <th>اسم الجهاز</th>
+                            <td>
+                                <%=item.name%>
+                            </td>
+                        </tr>
+                        <tr class="text-center">
+                            <th>الموديل</th>
+                            <td>
+                                <%=item.model%>
+                            </td>
+                        </tr class="text-center">
+                        <tr class="text-center">
+                            <th>نوع الجهاز</th>
+                            <td>
+                                <%=item.type%>
+                            </td>
+                        </tr>
+                        <tr class="text-center">
+                            <th>S/N</th>
+                            <td>
+                                <%=item.serialNo%>
+                            </td>
+                        </tr>
+                        <tr class="text-center">
+                            <th>تاريخ التسجيل</th>
+                            <td>
+                                <%= moment(new Date(item.createdAt)).format('DD-MM-YYYY') %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">
+                                <div class="d-flex justify-content-center">
+                                    <a class="text-center btn btn-primary mx-5" href="/items/<%=item._id%>/edit"><%-include('../partials/edit_icon.ejs')%>تعديل</a>
+                                    <form action="/items/<%=item._id%>/delete?_method=DELETE" method="post">
+                                        <button type="submit" class="btn btn-danger mx-5">
+                                            <%-include('../partials/delete_icon.ejs')%>
+                                            حذف
+                                        </button>
+                                    </form>
+                                </div>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="w-50 h-50 mt-4">
+            <div class="p-4 m-5 card">
+                <%if (item.image) {%>
+                    <img src="<%=item.image%>" alt="" width="50" height="50">
+                    <%} else {%>
+                        <h4 class="text-center text-muted"> لا يوجد صورة للجهاز</h4>
+                        <%}%>
+            </div>
+        </div>
+    </div>
